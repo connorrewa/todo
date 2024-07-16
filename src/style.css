@@ -25,6 +25,11 @@ ul {
     font-weight: normal;
 }
 
+button {
+    font-size: 15px;
+    padding: 8px 10px;
+}
+
 ol,
 ul {
     list-style: none;
@@ -38,15 +43,117 @@ img {
 .container {
     width: 100%;
     display: flex;
-    justify-content: center;
+    align-items: center;
     margin-top: 30px;
     align-items: center;
     padding: 20px;
+    flex-direction: column;
 }
 
 .content {
     width: min(900px, 90%);
-    background: white;
+    background: rgb(252, 252, 252);
     border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 24px;
 
+}
+
+#modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Black w/ opacity */
+}
+
+.modal-inner {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: max(50%, 400px);
+}
+
+#modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.buttons {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+
+}
+
+#modal-form input {
+    width: max(50%, 300px);
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    border-left: 5px solid rgb(114, 131, 204);
+    border-radius: 10px;
+    padding: 24px;
+    gap: 8px;
+    background-color: rgb(237, 238, 243);
+}
+
+.note-card {
+    background-color: rgb(253, 253, 253);
+    padding: 8px 20px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+
+}
+
+.add-todo {
+    width: 150px;
+}
+
+.item-modal {
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    padding-top: 100px;
+    /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Black w/ opacity */
+}
+
+.item-modal-inner {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: max(50%, 400px);
 }
