@@ -90,7 +90,7 @@ img {
     width: max(50%, 400px);
 }
 
-#modal-form {
+#modalForm {
     display: flex;
     flex-direction: column;
     gap: 6px;

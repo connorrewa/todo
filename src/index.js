@@ -1,25 +1,31 @@
 import './style.css';
-console.log("Hello World!");
+import calculateTimeUntilDue from './calcualteTimeUntilDue';
 
 class Note {
-    constructor(title, description, dueDate, priority) {
+    constructor(title, description) {
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
-        this.priority = priority;
         this.isDone = false;
     }
-
 }
 
 class Project {
-    constructor(name, notes) {
+    constructor(name, date, notes) {
         this.name = name;
+        this.date = date;
         this.notes = notes;
     }
 
     addNote(note) {
         this.notes.push(note);
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getDate() {
+        return this.date;
     }
 }
 
@@ -31,19 +37,35 @@ const initDOM = (projectList) => {
     let projectCard = document.createElement("div");
     projectCard.classList.add("project-card");
     let noteCard = document.createElement("div");
-
+    contentDiv.innerText = '';
+    projectList.forEach(project => {
+        let projectCard = document.createElement("div");
+        projectCard.classList.add("project-card");
+        let h1 = document.createElement("h1");
+        h1.innerText = project.getName();
+        projectCard.appendChild(h1);
+        const h2 = document.createElement("h2");
+        h2.innerText = "Project due in " +
+            calculateTimeUntilDue(project.getDate())
+                + " days";
+        projectCard.appendChild(h2);
+        contentDiv.appendChild(projectCard);
+    });
 
 }
 
 const initData = () => {
-    let note = new Note("1", "2", "3", "4");
-    let projectList = new Project('Default Project', [note]);
-    projectList.addNote(new Note("5", "6", "7", "8"));
+    let note = new Note("1", "2", "3");
+    let projectList = [];
+    let newProject = new Project('Default Project', "10-10-2024", [note])
+    newProject.addNote(new Note("5", "6"));
+    projectList.push(newProject);
     console.log(projectList);
 
     return projectList
 
 }
+
 
 
 let projectList = initData();
@@ -54,9 +76,12 @@ createProjectBtn.addEventListener("click", () => {
     console.log("new");
     const modal = document.querySelector("#modal");
     modal.style.display = "block";
-    let newProject = new Project("11", "22", "33", "44");
+    let newProject = new Project("First Project", "17-10-2024", []);
+    projectList.push(newProject);
     // add to api
     // refresh data
+    console.log(projectList)
+    initDOM(projectList);
 
 });
 
@@ -81,6 +106,74 @@ document.querySelector("#cancel-modal").addEventListener('click', function (e) {
     alert('cancel');
 });
 
+const insertAddItemButton = (project) => {
+    project.addEventListener('click', function (e) {
+        const itemModal = document.createElement('div');
+        const innerModal = document.createElement('div');
+        innerModal.innerHTML = '<h1>new note</h1>';
+    
+        const form = document.createElement('form');
+        const titleLabel = document.createElement('label');
+        const titleInput = document.createElement('input');
+        const descriptionLabel = document.createElement('label');
+        const descriptionInput = document.createElement('input');
+        const submitButton = document.createElement('input');
+        const cancelButton = document.createElement('input');
+    
+        form.id = 'modalForm'
+        titleLabel.setAttribute("for", "title");
+        titleLabel.innerText = 'title';
+        titleInput.setAttribute("type", "text");
+        titleInput.setAttribute("name", "title");
+    
+        descriptionLabel.setAttribute("for", "description");
+        descriptionLabel.innerText = 'description';
+        descriptionInput.setAttribute("type", "text");
+        descriptionInput.setAttribute("name", "description");
+    
+        submitButton.setAttribute("type", "submit");
+        submitButton.setAttribute("value", "submit");
+        cancelButton.setAttribute("type", "button");
+        cancelButton.setAttribute("value", "cancel");
+    
+        cancelButton.addEventListener('click', function (e) {
+            itemModal.remove();
+        })
+    
+        submitButton.addEventListener('click', function (e) {
+            e.preventDefault();
+            //submit form
+            let formEl = document.forms.modalForm;
+            let formData = new FormData(formEl);
+            let title = formData.get('title');
+            let description = formData.get('description');
+            console.log(title, description);
+            let newNote = new Note(title, description);
+            project.addNote(newNote);
+            initDOM(projectList);
+    
+    
+    
+        });
+    
+        form.appendChild(titleLabel);
+        form.appendChild(titleInput);
+        form.appendChild(descriptionLabel);
+        form.appendChild(descriptionInput);
+        const buttons = document.createElement('div');
+        buttons.classList.add("buttons");
+    
+        buttons.appendChild(submitButton);
+        buttons.appendChild(cancelButton);
+        form.appendChild(buttons);
+        innerModal.appendChild(form);
+    
+        itemModal.classList.add('item-modal');
+        innerModal.classList.add('item-modal-inner');
+        itemModal.appendChild(innerModal);
+        document.body.appendChild(itemModal);
+    });
+}
 document.querySelector(".add-todo").addEventListener('click', function (e) {
     const itemModal = document.createElement('div');
     const innerModal = document.createElement('div');
@@ -94,7 +187,7 @@ document.querySelector(".add-todo").addEventListener('click', function (e) {
     const submitButton = document.createElement('input');
     const cancelButton = document.createElement('input');
 
-    form.id = 'modal-form'
+    form.id = 'modalForm'
     titleLabel.setAttribute("for", "title");
     titleLabel.innerText = 'title';
     titleInput.setAttribute("type", "text");
@@ -116,6 +209,15 @@ document.querySelector(".add-todo").addEventListener('click', function (e) {
 
     submitButton.addEventListener('click', function (e) {
         e.preventDefault();
+        //submit form
+        let formEl = document.forms.modalForm;
+        let formData = new FormData(formEl);
+        let title = formData.get('title');
+        let description = formData.get('description');
+        console.log(title, description);
+        let newNote = new Note(title, description)
+
+
 
     });
 
