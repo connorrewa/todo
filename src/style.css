@@ -90,7 +90,7 @@ img {
     width: max(50%, 400px);
 }
 
-#modalForm {
+form {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -103,9 +103,18 @@ img {
 
 }
 
-#modal-form input {
+#projectForm input {
     width: max(50%, 300px);
 }
+
+form input[type="text"],
+form input[type="date"],
+form input[type="submit"],
+form input[type="cancel"] {
+    padding: 6px;
+}
+
+
 
 .project-card {
     display: flex;
@@ -115,6 +124,7 @@ img {
     padding: 24px;
     gap: 8px;
     background-color: rgb(237, 238, 243);
+    margin-bottom: 14px;
 }
 
 .note-card {
